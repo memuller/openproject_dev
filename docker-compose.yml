@@ -1,0 +1,33 @@
+version: '3.6'
+
+services:
+
+  openproject:
+    image: openproject/community:7.4
+    # if not using nginx-proxy
+    # ports:
+    #   - 8080:3000
+    environment:
+      SECRET_KEY_BASE: "fhjsak472389ddasd"
+      DATABASE_URL: "postgres://postgres:1234@db/postgres?pool=10&encoding=unicode&timeout=5000&reconnect=true"
+      VIRTUAL_HOST: openproject.test 
+      # /usr/src/app
+    depends_on:
+      - db
+    networks:
+      - default
+      - nginx_proxy
+
+  db:
+    image: postgres:10-alpine
+    environment:
+      POSTGRES_PASSWORD: '1234'
+    networks:
+      - default
+      - databases
+
+networks:
+  nginx_proxy:
+    external: true
+  databases:
+    external: true
