@@ -15,7 +15,7 @@ down:
 
 clean:
 	docker-compose down --remove-orphans ;
-	docker-compose rm ;
+	docker-compose rm -v ;
 
 ssh:
 	${EXEC_OPENPROJECT} bash ;
